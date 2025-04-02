@@ -1,4 +1,5 @@
 import pymupdf  # PyMuPDF
+from openpyxl import load_workbook
 
 
 def extract_stream_from_pdf(pdf_path):
@@ -33,7 +34,6 @@ def parse_path_data(data):
             while i + 1 < len(tokens) and not tokens[i].isalpha():
                 x = float(tokens[i])
                 y = float(tokens[i + 1])
-                # print(i, len(tokens), x, y)
                 points.append((x, y))
                 i += 2
             commands.append((cmd, points))
@@ -41,8 +41,26 @@ def parse_path_data(data):
             i += 1
     return commands
 
+def to_list(commands):
+    plist = []
+    for cmd, points in commands:
+        if points and len(points[0]) > 1:
+            plist.append([points[0][1], points[0][0]])
+    return plist
+
+def to_excel(plist, fname="out.xlsx"):
+    sheet_name = "Sheet1"
+    template_path = "template.xlsx"
+    wb = load_workbook(template_path)
+    ws = wb.active
+
+    # Обновление данных в шаблоне
+    for row in plist:
+        ws.append(row)
+    # Сохранение обновленного файла
+    wb.save(fname)
+
 
 path_commands = parse_path_data(stream_data)
-for cmd, points in path_commands:
-    if points and len(points[0]) > 1:
-        print(points[0][1], points[0][0])
+plist = to_list(path_commands)
+to_excel(plist)
