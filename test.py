@@ -10,5 +10,5 @@ for page in doc:
         if "stream" in stream and "endstream" in stream:
             print("YES-------")
         data = stream.split("stream")[0].split("endstream")[0].strip()
-        print(data)   
+        print(data)
 # %%
