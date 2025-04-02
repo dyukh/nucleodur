@@ -12,7 +12,7 @@ def extract_stream_from_pdf(pdf_path):
             data = stream.split("stream")[0].split("endstream")[0].strip()
             start = data.find("W n")
             stop = data[start:].find("S")
-            return data[start: start+stop - 1]
+            return data[start: start + stop - 1]
     return None
 
 
@@ -41,6 +41,7 @@ def parse_path_data(data):
             i += 1
     return commands
 
+
 def to_list(commands):
     plist = []
     for cmd, points in commands:
@@ -48,8 +49,9 @@ def to_list(commands):
             plist.append([points[0][1], points[0][0]])
     return plist
 
+
 def to_excel(plist, fname="out.xlsx"):
-    sheet_name = "Sheet1"
+    # sheet_name = "Sheet1"
     template_path = "template.xlsx"
     wb = load_workbook(template_path)
     ws = wb.active
