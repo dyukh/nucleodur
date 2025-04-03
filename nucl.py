@@ -50,8 +50,10 @@ def to_excel(plist, fname="out.xlsx", template="template.xlsx"):
     ws = wb.active
 
     # Обновление данных в шаблоне
-    for row in plist:
-        ws.append(row)
+    for i, row in enumerate(plist):
+        # ws.append(row)
+        ws.cell(row=i+2, column=1).value = row[0]
+        ws.cell(row=i+2, column=2).value = row[1]
     # Сохранение обновленного файла
     wb.save(fname)
 
