@@ -16,12 +16,6 @@ def extract_stream_from_pdf(pdf_path):
     return None
 
 
-pdf_path = "test.pdf"
-stream_data = extract_stream_from_pdf(pdf_path)
-start = stream_data.find("W n")
-# print(stream_data[start:1500])  # Посмотрим начало данных
-
-
 def parse_path_data(data):
     commands = []
     tokens = data.split()
@@ -50,10 +44,9 @@ def to_list(commands):
     return plist
 
 
-def to_excel(plist, fname="out.xlsx"):
+def to_excel(plist, fname="out.xlsx", template="template.xlsx"):
     # sheet_name = "Sheet1"
-    template_path = "template.xlsx"
-    wb = load_workbook(template_path)
+    wb = load_workbook(template)
     ws = wb.active
 
     # Обновление данных в шаблоне
@@ -63,6 +56,9 @@ def to_excel(plist, fname="out.xlsx"):
     wb.save(fname)
 
 
-path_commands = parse_path_data(stream_data)
-plist = to_list(path_commands)
-to_excel(plist)
+if __name__ == "__main__":
+    pdf_path = "test.pdf"
+    stream_data = extract_stream_from_pdf(pdf_path)
+    path_commands = parse_path_data(stream_data)
+    plist = to_list(path_commands)
+    to_excel(plist)
