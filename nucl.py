@@ -3,7 +3,7 @@ from openpyxl import load_workbook
 
 
 def extract_stream_from_pdf(pdf_path):
-    doc = pymupdf.open(pdf_path)
+    doc = pymupdf.open(stream=pdf_path, filetype="pdf")
     for page in doc:
         for xref in page.get_contents():
             stream = doc.xref_stream(xref).decode("latin1")
