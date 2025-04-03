@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  nucleo:
+    build: ./
+    container_name: nucleo
+    ports:
+      - 8555:8501
+    restart: unless-stopped
